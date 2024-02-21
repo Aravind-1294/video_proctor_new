@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register with Face Recognition</title>
+</head>
+<body>
+    <h1>Register with Face Recognition</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <button type="submit" name="submit">Register</button>
+    </form>
+
+    <script>
+        function capturePhoto() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('register') }}', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("submit=Register");
+        }
+    </script>
+</body>
+</html>
